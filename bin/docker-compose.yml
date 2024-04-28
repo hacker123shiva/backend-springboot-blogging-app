@@ -1,0 +1,40 @@
+version: '3.9'
+
+services:
+  mysql:
+    container_name: mysql_db
+    image: 'mysql:8.0'
+    restart: always
+    ports:
+      - '3307:3306'
+    environment:
+      - MYSQL_DATABASE= blog_app_apis
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+
+    networks:
+      - t_network
+
+  myspringapp:
+    image: myapplication
+    restart: always
+    ports:
+      - '8080:8080'
+    depends_on:
+      - mysql
+    links:
+      - mysql
+    networks:
+      - t_network
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/blog_app_apis
+      spring.datasource.username: root
+      spring.datasource.password: root
+      spring.datasource.driver-class-name: com.mysql.cj.jdbc.Driver
+    volumes:
+      - ./target:/app # Mounting the ./target directory to /app within the container
+
+networks:
+  t_network:
+    driver: bridge

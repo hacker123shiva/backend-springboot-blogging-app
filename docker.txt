@@ -1,0 +1,12 @@
+docker run -p 3307:3306 --name mysqldb -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=blog_app_apis mysql:8.0.23
+
+docker-compose up --build
+docker-compose up -d --build
+
+stop the container 
+docker-compose down
+
+launch multiple containers
+docker-compose up -d --scale springboot-app=5
+
+docker-compose up --build
