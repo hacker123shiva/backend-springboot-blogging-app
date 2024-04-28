@@ -11,7 +11,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.shiva.blog.config.AppConstants;
+import com.shiva.blog.entities.Category;
 import com.shiva.blog.entities.Role;
+import com.shiva.blog.repositories.CategoryRepo;
 import com.shiva.blog.repositories.RoleRepo;
 
 @SpringBootApplication
@@ -21,6 +23,9 @@ public class BlogAppApisApplication implements CommandLineRunner {
 
 	@Autowired
 	private RoleRepo roleRepo;
+
+	@Autowired
+	private CategoryRepo categoryRepo;
 
 	public static void main(String[] args) {
 		SpringApplication.run(BlogAppApisApplication.class, args);
@@ -37,7 +42,7 @@ public class BlogAppApisApplication implements CommandLineRunner {
 		System.out.println(this.passwordEncoder.encode("xyz"));
 
 		try {
-
+			// Creating roles
 			Role role = new Role();
 			role.setId(AppConstants.ADMIN_USER);
 			role.setName("ROLE_ADMIN");
@@ -54,11 +59,27 @@ public class BlogAppApisApplication implements CommandLineRunner {
 				System.out.println(r.getName());
 			});
 
+			// Creating categories
+			Category fashion = new Category("Fashion", "Articles related to the latest fashion trends.");
+			Category technology = new Category("Technology",
+					"Information about new gadgets, software, and tech trends.");
+			Category programming = new Category("Programming",
+					"Tutorials, tips, and discussions about programming languages.");
+			Category spirituality = new Category("Spirituality",
+					"Explore topics related to spiritual growth and practices.");
+			Category politics = new Category("Politics", "Analysis and discussions on political events and policies.");
+
+			List<Category> categories = List.of(fashion, technology, programming, spirituality, politics);
+
+			List<Category> savedCategories = this.categoryRepo.saveAll(categories);
+
+			savedCategories.forEach(c -> {
+				System.out.println("Category saved: " + c.getCategoryTitle());
+			});
+
 		} catch (Exception e) {
-			// TODO: handle exception
+
 			e.printStackTrace();
 		}
-
 	}
-
 }
