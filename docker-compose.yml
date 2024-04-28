@@ -2,11 +2,11 @@ version: '3'
 services:
   springboot-app:
     container_name: springapp
-    image: springboot-app
+    image: hacker123shiva/springboot-app
     restart: always
     build: .
     ports:
-      - '8080:8080'
+      - '9000:9000'
     environment:
       MYSQL_HOST: mysqldb
       MYSQL_USER: root
