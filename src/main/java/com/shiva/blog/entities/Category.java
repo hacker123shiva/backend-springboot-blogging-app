@@ -22,6 +22,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
+
 public class Category {
 
 	@Id
@@ -37,8 +38,9 @@ public class Category {
 	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Post> posts = new ArrayList<>();
 
-	public Category(String categoryTitle, String categoryDescription) {
+	public Category(int categoryId, String categoryTitle, String categoryDescription) {
 		super();
+		this.categoryId = categoryId;
 		this.categoryTitle = categoryTitle;
 		this.categoryDescription = categoryDescription;
 	}

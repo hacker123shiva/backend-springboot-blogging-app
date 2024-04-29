@@ -60,14 +60,15 @@ public class BlogAppApisApplication implements CommandLineRunner {
 			});
 
 			// Creating categories
-			Category fashion = new Category("Fashion", "Articles related to the latest fashion trends.");
-			Category technology = new Category("Technology",
+			Category fashion = new Category(1, "Fashion", "Articles related to the latest fashion trends.");
+			Category technology = new Category(2, "Technology",
 					"Information about new gadgets, software, and tech trends.");
-			Category programming = new Category("Programming",
+			Category programming = new Category(3, "Programming",
 					"Tutorials, tips, and discussions about programming languages.");
-			Category spirituality = new Category("Spirituality",
+			Category spirituality = new Category(4, "Spirituality",
 					"Explore topics related to spiritual growth and practices.");
-			Category politics = new Category("Politics", "Analysis and discussions on political events and policies.");
+			Category politics = new Category(5, "Politics",
+					"Analysis and discussions on political events and policies.");
 
 			List<Category> categories = List.of(fashion, technology, programming, spirituality, politics);
 
