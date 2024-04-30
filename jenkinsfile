@@ -1,0 +1,48 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('Build a Maven Project') {
+            steps {
+                echo 'Starting to checkout the GitHub repository'
+                git branch: 'main', credentialsId: 'your-credentials-id', url: 'https://github.com/hacker123shiva/backend-springboot-blogging-app'
+                echo 'Cleaning the project'
+                bat 'mvn clean install'
+            }
+        }
+        
+           stage ('Build SpringApp Docker Image ') {
+            steps{
+                script {
+                    echo 'Checking if docker service is available ...' 
+                    echo 'Starting Docker Image building'
+                    bat 'docker-compose build'
+                }
+            }
+        }
+        
+        stage('Pushing the SpringApp Docker Image to Docker Registry') {
+            steps {
+                echo 'Logging to Docker registry.....'
+               
+                
+                withCredentials([string(credentialsId: 'mycredit', variable: 'dockerhubpwd')]) {
+                   bat 'docker login -u hacker123shiva -p %dockerhubpwd%'
+}
+                echo 'Starting the push of Docker Image ....'
+                bat 'docker push hacker123shiva/springboot-app'
+            }
+        }
+        
+   stage('Testing the deployment') {
+    steps {
+      
+        echo 'Starting a local container of the App ....'
+        bat 'docker-compose up -d --build'
+        echo 'The App is now available at Port 9000....'
+    }
+}
+
+        
+    }
+}
