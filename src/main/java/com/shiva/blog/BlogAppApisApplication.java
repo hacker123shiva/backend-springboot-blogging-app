@@ -72,7 +72,10 @@ public class BlogAppApisApplication implements CommandLineRunner {
 
 			Category science = new Category(6, "Science",
 					"Science is mother of every invention.");
-			List<Category> categories = List.of(fashion, technology, programming, spirituality, politics, science);
+
+			Category health = new Category(7, "Health", "Health is wealth.");
+			List<Category> categories = List.of(fashion, technology, programming, spirituality, politics, science,
+					health);
 
 			List<Category> savedCategories = this.categoryRepo.saveAll(categories);
 
