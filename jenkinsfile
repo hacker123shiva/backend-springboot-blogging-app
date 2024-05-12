@@ -13,10 +13,9 @@ pipeline {
         
            stage ('Build SpringApp Docker Image ') {
             steps{
-                script {
-                    echo 'Checking if docker service is available ...' 
-                    echo 'Starting Docker Image building'
-                    bat 'docker-compose build'
+               script {
+                    echo 'Building the Docker image...'
+                    bat 'docker build -t hacker123shiva/springboot-app .'
                 }
             }
         }
